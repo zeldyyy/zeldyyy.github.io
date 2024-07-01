@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <div class="bg-red-700 text-white w-64 min-h-screen p-4">
+            <h2 class="text-xl font-semibold mb-6 text-center">
+                Admin Dashboard
+            </h2>
+            <div class="mb-6 flex flex-col justify-center items-center">
+                <img src="./yz.jpg" alt="Profile Photo" class="w-24 h-24 rounded-full mx-auto">
+                <p class="text-center mt-2">Yu zhong</p>
+            </div>
+            <ul>
+                <li class="mb-4 hover:bg-red-600 p-4 rounded"><a href="./index.php" class="hover:text-gray-300">
+                        Dashboard
+                    </a></li>
+                <li class="mb-4 hover:bg-red-600 p-4 rounded"><a href="#" class="hover:text-gray-300">
+                        Users
+                    </a></li>
+                <li class="mb-4 hover:bg-red-600 p-4 rounded"><a href="#" class="hover:text-gray-300">
+                        Settings
+                    </a></li>
+            </ul>
+
+            <div class="mt-auto text-black">
+                <form id="chartForm" class="p-4 bg-black rounded shadow-md">
+                    <h3 class="text-lg font-semibold mb-2 text-white">
+                        Tambahkan Data ke Chart
+                    </h3>
+                    <div class="mb-4">
+                        <label for="month" class="block text-sm font-medium text-white">
+                            Bulan
+                        </label>
+                        <input type="text" id="month" name="month" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                    </div>
+                    <div class="mb-4">
+                        <label for="sales" class="block text-sm font-medium text-white">
+                            Jumlah Penjualan
+                        </label>
+                        <input type="number" id="sales" name="sales" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Tambahkan ke Chart
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="flex-1 flex flex-col">
+            <header class="bg-white p-4 shadow-md flex justify-between items-center">
+                <h1 class="text-xl font-semibold text-red-700">
+                    Dashboard
+                </h1>
+                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    <a href="./web/login.php">
+                        Logout
+                    </a>
+                </button>
+            </header>
+
+            <main class="p-4 flex-1">
+                <h2 class="text-2xl font-semibold mb-6 text-red-700">
+                    Welcome to the Dashboard
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white p-6 rounded shadow-md border-l-4 border-red-500">
+                        <h3 class="text-xl font-semibold mb-2 text-red-700">
+                            Total User
+                        </h3>
+                        <p>
+                            ini adalah deskripsi card.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded shadow-md border-l-4 border-red-500">
+                        <h3 class="text-xl font-semibold mb-2 text-red-700">
+                            Total Penjualan
+                        </h3>
+                        <p>
+                            Ini adalah deskripsi card.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded shadow-md border-l-4 border-red-500">
+                        <h3 class="text-xl font-semibold mb-2 text-red-700">
+                            Total Pesanan
+                        </h3>
+                        <p>
+                            Ini adalah deskripsi card
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded shadow-md mt-6">
+                    <h3 class="text-xl font-semibold mb-4 text-red-700">
+                        Sales Chart
+                    </h3>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        let labels = ['January', 'February', 'March', 'April', 'May', 'June'];
+        let data = [12, 19, 3, 5, 2, 3];
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Sales',
+                    data: data,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('chartForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const monthInput = document.getElementById('month');
+            const salesInput = document.getElementById('sales');
+
+            const month = monthInput.value;
+            const sales = parseFloat(salesInput.value);
+
+            if (!month || isNaN(sales)) {
+                alert('Harap isi bulan dan jumlah penjualan dengan benar.');
+                return;
+            }
+
+            labels.push(month);
+            data.push(sales);
+
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = data;
+            myChart.update();
+
+            monthInput.value = '';
+            salesInput.value = '';
+        });
+    </script>
+</body>
+
+</html>
