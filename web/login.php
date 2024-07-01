@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="./src/output.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #username {
+            background-image: url(../user.png);
+            background-position: start;
+            background-repeat: no-repeat;
+            background-size: 5%;
+            background-position-y: center;
+            background-position-x: right;
+        }
+
+        #password {
+            background-image: url(../pass.png);
+            background-position: start;
+            background-repeat: no-repeat;
+            background-size: 5%;
+            background-position-y: center;
+            background-position-x: right;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-1/2">
+        <h1 class="text-6xl font-semibold text-center mb-4">
+            Log<span class="text-blue-700">In</span>
+        </h1>
+        <p class="text-center text-gray-600 mb-6">
+            Enter your username and password to access the sales dashboard.
+            <br>
+            Tekan saja langsung login
+        </p>
+        <form action="#" method="POST" class="">
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">
+                    Username
+                </label>
+                <input type="text" id="username" name="username" class="form-input p-2 w-full flex justify-center" placeholder="Enter your username" readonly>
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700">
+                    Password
+                </label>
+                <input type="password" id="password" name="username" class="form-input p-2 w-full" placeholder="Enter your password" readonly r>
+            </div>
+            <button type="submit" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                <a href="../index.php">
+                    Login
+                </a>
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>
